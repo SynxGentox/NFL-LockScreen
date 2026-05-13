@@ -15,16 +15,12 @@ struct LockScreenView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                if image.isEmpty {
-                    Image(viewModel.defaultImage.rawValue)
-                        .resizable()
-                        .imageStyle()
-                } else {
-                    APIImage(viewModel: viewModel, imageLink: image)
-                }
+                
+                APIImage(viewModel: viewModel, imageLink: image)
+                    .scaleEffect(1.1)
+                    .containerRelativeFrame([.horizontal, .vertical])
                 
                 VStack {
-                    Spacer().frame(height: 100)
                     TimelineView(.periodic(from: Date.now, by: 1)) { context in
                         Text(context.date, format: .dateTime.day().month().year())
                             .dateFont(fontSize: 24)
@@ -35,34 +31,21 @@ struct LockScreenView: View {
                     }
                     .shadow(color: .primary.opacity(0.20), radius: 20, x: 0, y: 0)
                     
-                    // don't use a var to store Date.now bcz it will only store the current time and wont update it, instead directly attach Date.now to view and same goes for using Date.now outside TimelineView.
-                    
+                    .frame(maxWidth: .infinity, maxHeight: 150)
                     Spacer()
+                    
+                    // don't use a var to store Date.now bcz it will only store the current time and wont update it, instead directly attach Date.now to view and same goes for using Date.now outside TimelineView.
                 }
-                
-                let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeGestureAction))
-                swipeGesture.direction = .down
-                swipeGesture.numberOfTouchesRequired = 3
-                self.view.addGestureRecognizer(swipeGesture)
-                
-                @objc func swipeGestureAction(_ gesture: UISwipeGestureRecognizer) {
-                    if gesture.numberOfTouchesRequired = gesture.numberOfTouches {
-                        NavigationLink(AppRoute.settingsView, value: AppRoute.settingsView)
-                            .navigationDestination(for: AppRoute.settingsView) {
-                                SettingsView(viewModel: viewModel, hapticCount: 0)
-                            }
-                    }
-                }
-                
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
             .toolbar {
                 ToolbarItemGroup(placement: .bottomBar) {
                     Button {
                         Task {
                             try await Task.sleep(nanoseconds: UInt64(viewModel.delay * 1_000_000_000))
-                            print("tapped1")
+                            image = viewModel.imageLink1
                         }
-                        image = viewModel.imageLink1
                     } label: {
                         Image(systemName: "flashlight.off.fill")
                             .font(.system(size: 20))
@@ -73,12 +56,21 @@ struct LockScreenView: View {
                     Button {
                         Task {
                             try await Task.sleep(nanoseconds: UInt64(viewModel.delay * 1_000_000_000))
-                            print("tapped2")
+                            image = viewModel.imageLink2
                         }
-                        image = viewModel.imageLink2
                     } label: {
                         Image(systemName: "camera.fill")
                             .font(.system(size: 20))
+                    }
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    NavigationLink(value: "Settings") {
+                        Image(systemName: "gear")
+                            .font(.title2)
+                            .padding()
+                    }
+                    .navigationDestination(for: String.self) {_ in
+                        SettingsView(viewModel: viewModel, hapticCount: 0)
                     }
                 }
             }

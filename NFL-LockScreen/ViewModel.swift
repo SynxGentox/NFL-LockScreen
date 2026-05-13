@@ -12,7 +12,7 @@ import Observation
 final class ViewModel {
     var imageLink1: String = ""
     var imageLink2: String = ""
-    var delay: Double = 3
+    var delay: Double = 0
     var backupImage: Wallpaper = .pro17
     var defaultImage: Wallpaper = .pro16
     
