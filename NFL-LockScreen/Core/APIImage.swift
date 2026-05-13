@@ -13,25 +13,20 @@ struct APIImage: View {
     
     var body: some View {
         AsyncImage(url: URL(string: imageLink)) { output in
-            if output.image == nil {
-                Image(imageLink == viewModel.defaultImage.rawValue ? viewModel.backupImage.rawValue : viewModel.defaultImage.rawValue)
-                    .resizable()
-                    .imageStyle()
-            }
             if output.error != nil {
                 VStack{
-                    Image(viewModel.backupImage.rawValue)
+                    Image(viewModel.defaultImage.rawValue)
                         .resizable()
                         .imageStyle()
-                        .scaleEffect(1.1)
-                        .ignoresSafeArea()
                 }
+            } else if output.image == nil {
+                Image(viewModel.backupImage.rawValue)
+                    .resizable()
+                    .imageStyle()
             } else if let image = output.image {
                 image
                     .resizable()
                     .imageStyle()
-                    .scaleEffect(1.1)
-                    .ignoresSafeArea()
             } else {
                 ProgressView()
             }

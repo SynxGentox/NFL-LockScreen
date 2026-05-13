@@ -17,6 +17,7 @@ struct LockScreenView: View {
             ZStack {
                 
                 APIImage(viewModel: viewModel, imageLink: image)
+                    .id(image)
                     .scaleEffect(1.1)
                     .containerRelativeFrame([.horizontal, .vertical])
                 
