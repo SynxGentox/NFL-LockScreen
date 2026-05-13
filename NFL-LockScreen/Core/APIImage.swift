@@ -15,12 +15,12 @@ struct APIImage: View {
         AsyncImage(url: URL(string: imageLink)) { output in
             if output.error != nil {
                 VStack{
-                    Image(viewModel.defaultImage.rawValue)
+                    Image(viewModel.backupImage.rawValue)
                         .resizable()
                         .imageStyle()
                 }
             } else if output.image == nil {
-                Image(viewModel.backupImage.rawValue)
+                Image(viewModel.defaultImage.rawValue)
                     .resizable()
                     .imageStyle()
             } else if let image = output.image {

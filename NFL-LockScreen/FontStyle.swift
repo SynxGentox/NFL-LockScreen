@@ -14,9 +14,9 @@ struct clockStyle: ViewModifier {
             .font(.system(size: fontSize).monospacedDigit())
             .fontWeight(.bold)
 //            .fontWidth(.compressed)
-            .shadow(color: .black.opacity(0.4), radius: 1, x: 0, y: 1)
-            .shadow(color: .white.opacity(0.7), radius: 0, x: -1, y: -1)
-            .foregroundStyle(.ultraThinMaterial.opacity(0.7))
+            .shadow(color: .black.opacity(0.3), radius: 1, x: 0, y: 1)
+            .shadow(color: .white.opacity(0.6), radius: 0, x: -1, y: -1)
+            .foregroundStyle(.ultraThinMaterial.opacity(0.9))
     }
 }
 

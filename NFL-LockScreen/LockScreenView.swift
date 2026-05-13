@@ -22,6 +22,22 @@ struct LockScreenView: View {
                     .containerRelativeFrame([.horizontal, .vertical])
                 
                 VStack {
+                    HStack {
+                        Spacer()
+                        NavigationLink(value: "Settings") {
+                            Color.clear
+                                .frame(width: 80, height: 20)
+                        }
+                        .navigationDestination(for: String.self) {_ in
+                            SettingsView(viewModel: viewModel, hapticCount: 0)
+                        }
+                    }
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
+                
+                VStack {
                     TimelineView(.periodic(from: Date.now, by: 1)) { context in
                         Text(context.date, format: .dateTime.day().month().year())
                             .dateFont(fontSize: 24)
@@ -62,16 +78,6 @@ struct LockScreenView: View {
                     } label: {
                         Image(systemName: "camera.fill")
                             .font(.system(size: 20))
-                    }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    NavigationLink(value: "Settings") {
-                        Image(systemName: "gear")
-                            .font(.title2)
-                            .padding()
-                    }
-                    .navigationDestination(for: String.self) {_ in
-                        SettingsView(viewModel: viewModel, hapticCount: 0)
                     }
                 }
             }
