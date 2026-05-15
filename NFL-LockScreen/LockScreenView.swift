@@ -23,7 +23,7 @@ struct LockScreenView: View {
                 
                 VStack {
                     HStack {
-                        Spacer()
+                        
                         NavigationLink(value: "Settings") {
                             Color.clear
                                 .frame(width: 80, height: 20)
@@ -31,6 +31,7 @@ struct LockScreenView: View {
                         .navigationDestination(for: String.self) {_ in
                             SettingsView(viewModel: viewModel, hapticCount: 0)
                         }
+                        Spacer()
                     }
                     Spacer()
                 }
